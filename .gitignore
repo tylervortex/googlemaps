@@ -1,0 +1,56 @@
+# Excluir arquivos do vim
+.*.swp
+Session.vim
+
+# Excluir arquivo do MySQL Workbench
+*.bak
+*.mwb
+
+# Excluir arquivos de dump SQL
+*.dump.sql
+*.dump.sql.bz2
+*.sql.bz2
+
+# Excluir arquivos temporários do Cake
+tmp/logs/*.log
+tmp/cache/cake_*
+tmp/cache/menu_*
+tmp/cache/models/cake_*
+tmp/cache/persistent/cake_*
+tmp/sessions/sess_*
+tmp/cache/acl/*
+tmp/cache/data/accounting_*
+!tmp/cache/acl/empty
+tmp/cache/db_*
+
+# Excluir diretório de arquivos adicionados por upload
+webroot/files/*.jpg
+webroot/files/*.JPG
+webroot/files/*.png
+webroot/files/*.gif
+webroot/files/resized/*.jpg
+webroot/files/resized/*.JPG
+webroot/files/resized/*.png
+webroot/files/resized/*.gif
+webroot/files/plots/*.png
+webroot/files/scde/*
+!webroot/files/scde/empty
+webroot/files/hydro/*
+!webroot/files/hydro/empty
+webroot/.cookies.lwp
+
+# Excluir arquivo de cookie do Perl LWP
+webroot/script/.cookies.lwp
+
+# Excluir arquivos com senhas e de configuração
+config/database.php
+config/email.php
+config/geocode.php
+config/maintenance.php
+config/debug.php
+
+# Diretório com arquivos de teste
+bkp/
+
+# NetBeans
+nbproject/private/
