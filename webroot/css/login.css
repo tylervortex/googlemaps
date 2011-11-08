@@ -1,0 +1,63 @@
+.login {
+	color:#333;
+	text-align:center;
+	margin:auto;
+	font-size:80%;
+	background-color:#c6edcb;
+	padding:15px;
+}
+.login table {
+	text-align:left;
+}
+.login table tr td {
+	padding:8px;
+}
+form label {
+	width:auto;
+}
+label {
+	clear:both;
+	padding-right:10px;
+}
+form {
+	clear:none;
+	text-align:center;
+}
+form div {
+	margin-bottom:0;
+}
+form div.submit {
+	margin-top:0;
+	padding-left:0;
+	display:inline;
+}
+#authMessage {
+	color:red;
+	background:none;
+	border:none;
+	font-size:90%;
+}
+.menu {
+	text-align:center;
+}
+.menu a {
+	padding:0 6px;
+	color:#333;
+	text-decoration:none;
+	font-weight:bold;
+}
+.menu a:hover {
+	text-decoration:underline;
+}
+input:focus, textarea:focus {
+	background-color: #ffc;
+}
+input[type="text"], input[type="password"] {
+	clear:both;
+	font-family:"frutiger linotype", "lucida grande", "verdana", sans-serif;
+	padding:2px;
+	margin:0;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border:1px solid #c0c0c0;
+}

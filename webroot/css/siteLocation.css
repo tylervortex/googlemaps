@@ -1,0 +1,14 @@
+table.location {
+	background-color:#d2e5f2;
+	width:550px;
+	margin-bottom:10px;
+}
+table.location td {
+}
+table.location td label {
+	padding:0;
+}
+table.location td input[type="radio"] {
+	padding:0;
+	margin:0;
+}

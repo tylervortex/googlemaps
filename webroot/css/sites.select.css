@@ -1,0 +1,7 @@
+.ui-button { margin-left: -1px; }
+.ui-button-icon-only .ui-button-text { padding: 0.35em; }
+.ui-autocomplete-input { margin: 0; padding: 0.48em 0 0.47em 0.45em; }
+.ui-menu-item { font-size: 8pt }
+.sites-select { font-size: 8pt; text-align: right }
+.sites-select input { font-size: 8pt; }
+.sites-select input { width: 100px; }

@@ -1,0 +1,18 @@
+.calendar-year {
+	padding-left:5px;
+}
+.day {
+	text-align:right;
+}
+span.day a {
+	text-decoration:none;
+}
+.today {
+	font-weight:bold;
+	background-color:#c4c4c4;
+}
+.event-day {
+	font-weight:bold;
+	color:white;
+	background-color:red;
+}

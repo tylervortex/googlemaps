@@ -1,0 +1,9 @@
+# Excluir arquivos do vim
+.*.swp
+Session.vim
+
+# Excluir diretório temporário com cache do Cake
+tmp/
+
+# Excluir plugins
+plugins/

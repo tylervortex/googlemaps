@@ -1,0 +1,31 @@
+div.filter {
+	font-size:10pt;
+	margin-bottom:5px;
+}
+table.filter {
+	margin-bottom:10px;
+	width:100%;
+}
+table.filter th {
+	font-size:9pt;
+	background-color:#d2e5f2;
+	text-align:left;
+	padding:1px 2px 1px 2px;
+}
+table.filter td {
+	border:1px solid #d2e5f2;
+	padding:5px;
+}
+input.date {
+	width:100px;
+}
+select {
+	vertical-align:middle;
+}
+#ui-datepicker-div {
+	font-size:9pt;
+}
+table.noborder td {
+	border:none;
+	padding:2px;
+}

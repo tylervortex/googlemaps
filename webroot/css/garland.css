@@ -1,0 +1,133 @@
+body {
+	margin: 0;
+	padding: 0;
+	background: #edf4f9;
+	color: #494949;
+	font-family: "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px/100%;
+}
+img {
+	border:none;
+}
+#header-region {
+	min-height: 0.8em;
+	text-align: right;
+	padding-right: 10px;
+	font-size:65%;
+	color:#494949;
+}
+#header-region a {
+	color:#494949;
+	text-decoration: none;
+}
+#header-region a:hover {
+	color:#494949;
+	text-decoration: underline;
+}
+#wrapper {
+	background: #edf4f9 url(../img/body.bg.png) repeat-x 50% 0;
+}
+#wrapper #container {
+	margin: 0 auto;
+	padding: 0 20px;
+}
+#wrapper #container #header {
+	height: 80px;
+}
+#wrapper #container #header #logo-floater {
+	padding-top: 10px;
+}
+#wrapper #container #header #logo-floater img {
+	float: left;
+}
+body.sidebars {
+	min-width: 980px;
+}
+body.sidebar-left, body.sidebar-right {
+	min-width: 780px;
+}
+#wrapper #container #center {
+	float: left;
+	width: 100%;
+}
+body.sidebar-left #center {
+	margin-left: -120px;
+}
+body.sidebar-right #center {
+	margin-right: -120px;
+}
+body.sidebars #center {
+	margin: 0;
+}
+body.sidebar-left #squeeze {
+	margin-left: 120px;
+}
+body.sidebar-right #squeeze {
+	margin-right: 120px;
+}
+body.sidebars #squeeze {
+	margin: 0px 0px 0 0px;
+}
+#wrapper #container .sidebar {
+	margin: 60px 0 5em;
+	width: 120px;
+	float: left;
+	z-index: 2;
+	position: relative;
+}
+#wrapper #container .sidebar .block {
+	margin: 0 0 1.5em 0;
+}
+#sidebar-left .block {
+	padding: 0 15px 0 0px;
+}
+#sidebar-right .block {
+	padding: 0 0px 0 15px;
+}
+.block .content {
+	margin: 0.5em 0;
+}
+#sidebar-left .block-region {
+	margin: 0 15px 0 0px;
+}
+#sidebar-right .block-region {
+	margin: 0 0px 0 15px;
+}
+#wrapper #container #center #squeeze {
+	background: #ffffff url(../img/content.bg.png) repeat-x 50% 0;
+	position: relative;
+}
+#wrapper #container #center .right-corner {
+	background: transparent url(../img/content.right.bg.png) no-repeat 100% 0;
+	position: relative;
+	left: 10px;
+}
+#wrapper #container #center .right-corner .left-corner {
+	padding: 30px 20px 5em 25px;
+	background: transparent url(../img/content.left.bg.png) no-repeat 0 0;
+	margin-left: -10px;
+	position: relative;
+	left: -10px;
+	min-height: 400px;
+}
+#wrapper #footer {
+	float: none;
+	clear: both;
+	text-align: center;
+	margin: 1em 0 1em;
+	color: #898989;
+	font-size: 70%;
+}
+.clear-block:after {
+	content: '.';
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.clear-block {
+	display: inline-block;
+}
+.clear-block {
+	display: block;
+}

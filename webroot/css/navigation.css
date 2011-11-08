@@ -1,0 +1,37 @@
+/* Navigation */
+.navigation {
+}
+.navigation li {
+	display:block;
+	float:left;
+	font-size:80%;
+}
+.navigation a {
+	display:block;
+	float:left;
+	padding:0 8px;
+	text-decoration:none;
+}
+.navigation a:hover {
+	text-decoration:underline;
+}
+#menu {
+	float:right;
+	padding-left:100px;
+}
+#menu a {
+	color:#494949;
+	font-size:90%;
+}
+#user-menu {
+	float:right;
+}
+#user-menu span {
+	color:#494949;
+	display:block;
+	font-size:80%;
+}
+#user-menu a {
+	color:blue;
+	font-size:80%;
+}

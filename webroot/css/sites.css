@@ -1,0 +1,149 @@
+.rounded-corners {
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	-khtml-border-radius:5px;
+	border-radius:5px;
+}
+.module-title {
+	margin-bottom:10px;
+}
+.site {
+	border:3px solid green;
+	margin:10px;
+}
+.site .title {
+	background-color:green;
+	color:white;
+	font-weight:bold;
+	padding:4px;
+	font-size:12pt;
+}
+.site .body {
+	padding:10px;
+	font-size:10pt;
+}
+.snav {
+	background-color:#bfffbf;
+	padding:4px 10px;
+	display:inline-block;
+	font-size:9pt;
+}
+.snavlink {
+	text-decoration:none;
+	color:darkblue;
+	cursor:pointer;
+	padding:0 5px;
+}
+.snavlink:hover {
+	color:blue;
+	text-decoration:none;
+	padding:2px 3px;
+	border: 2px #4ecf4d solid;
+	background-color:#fffff6;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	-khtml-border-radius:5px;
+	border-radius:5px;
+}
+.snavsel {
+	border: 2px #4ecf4d solid;
+	padding:3px;
+	font-weight:bold;
+	color:#000;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	-khtml-border-radius:5px;
+	border-radius:5px;
+}
+.navlink {
+	text-decoration:none;
+	color:darkblue;
+	cursor:pointer;
+	padding:7px 5px;
+}
+.link {
+	text-decoration:none;
+	color:darkblue;
+	cursor:pointer;
+	font-size:9pt;
+	padding:0 5px;
+	border:0;
+}
+.link:hover {
+	text-decoration:underline;
+}
+.navlink:hover {
+	color:blue;
+	text-decoration:none;
+	padding:6px 3px;
+	border:2px #4ecf4d solid;
+	background-color:#fffff6;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	-khtml-border-radius:5px;
+	border-radius:5px;
+}
+.navsel {
+	border: 2px #4ecf4d solid;
+	padding:5px;
+	font-weight:bold;
+	color:#000;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	-khtml-border-radius:5px;
+	border-radius:5px;
+}
+table.data tr td {
+	padding:4px;
+	color:#000;
+	font-size:11pt;
+	border:0;
+}
+.block-ui-cancel {
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	-khtml-border-radius:5px;
+	border-radius:5px;
+	padding:5px;
+	cursor:pointer;
+	background-color:#c0c0c0;
+	clear:both;
+	font-size:9pt;
+}
+.block-ui-cancel:hover {
+	background-color:#d9d9d9;
+	padding:-2px -2px;
+	color:#333;
+}
+.block-ui-cancel:active {
+	background-color:#c0c0c0;
+	color:#000;
+}
+.report-button {
+	display:inline-block;
+	background-color:#bfffbf;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	-khtml-border-radius:5px;
+	border-radius:5px;
+	padding:4px;
+	margin-left:20px;
+	font-size:9pt;
+	cursor:pointer;
+}
+.report-button:hover {
+	padding:3px;
+	border:1px solid #000;
+}
+.report-button a {
+	text-decoration:none;
+	color:darkblue;
+}
+.report-button a:hover {
+	color:blue;
+	text-decoration:none;
+}
+.actions .update {
+	padding-left:20px;
+	background:url('../img/refresh.icon.png') no-repeat left;
+}

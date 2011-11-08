@@ -1,0 +1,267 @@
+/* Module */
+.module {
+	margin-bottom:10px;
+	margin-top:30px;
+}
+.module-title {
+	color: #494949;
+	float:left;
+	margin-right:20px;
+	font-weight:bold;
+}
+.module h2 {
+	margin:0;
+	padding:5px;
+	padding-left:10px;
+	font-weight:bold;
+	font-family:sans-serif;
+	color:#444;
+	text-shadow:#c0c0c0 0px 1px 1px;
+}
+.module h2 a {
+	text-decoration:none;
+	color:#d19b4b;
+}
+.module h2 a.current {
+	color:#8F5200;
+}
+.module .actions {
+	font-size:98%;
+	display:block;
+}
+.module .message {
+	display:inline;
+	padding:0;
+	margin:0;
+	background:inherit;
+	border:0;
+	font-family:sans-serif;
+	font-size:10pt;
+	color:green;
+	padding-left:20px;
+	background:url('../img/done.icon.png') no-repeat left;
+}
+.module .message-warning {
+	display:inline;
+	padding:0;
+	margin:0;
+	background:inherit;
+	border:0;
+	font-family:sans-serif;
+	font-size:10pt;
+	color:orange;
+	padding-left:20px;
+	background:url('../img/done.icon.png') no-repeat left;
+}
+.module .message-error {
+	display:block;
+	padding:0;
+	margin:0;
+	background:inherit;
+	border:0;
+	font-family:sans-serif;
+	font-size:10pt;
+	color:red;
+	padding-left:20px;
+	margin-top:10px;
+	background:url('../img/error.icon.png') no-repeat left;
+}
+#moduleMessage {
+	font-weight:bold;
+}
+.actions .add {
+	padding-left:20px;
+	background:url('../img/add.icon.png') no-repeat left;
+}
+.actions .add:hover {
+	padding-left:20px;
+	background:url('../img/add.hicon.png') no-repeat left;
+}
+.actions .edit {
+	padding-left:20px;
+	background:url('../img/edit.icon.png') no-repeat left;
+}
+.actions .edit:hover {
+	padding-left:20px;
+	background:url('../img/edit.hicon.png') no-repeat left;
+}
+.actions .delete {
+	padding-left:20px;
+	background:url('../img/delete.icon.png') no-repeat left;
+}
+.actions .delete:hover {
+	padding-left:20px;
+	background:url('../img/delete.hicon.png') no-repeat left;
+}
+.actions .view {
+	padding-left:20px;
+	background:url('../img/view.icon.png') no-repeat left;
+}
+.actions .view:hover {
+	padding-left:20px;
+	background:url('../img/view.hicon.png') no-repeat left;
+}
+.actions .passwd {
+	padding-left:20px;
+	background:url('../img/passwd.icon.png') no-repeat left;
+}
+.actions .passwd:hover {
+	padding-left:20px;
+	background:url('../img/passwd.hicon.png') no-repeat left;
+}
+.actions .gallery {
+	padding-left:20px;
+	background:url('../img/gallery.icon.png') no-repeat left;
+}
+.actions .gallery_delete {
+	padding-left:20px;
+	background:url('../img/gallery.delete.icon.png') no-repeat left;
+}
+.actions .gallery_add {
+	padding-left:20px;
+	background:url('../img/gallery.add.icon.png') no-repeat left;
+	color:#444;
+	font-weight:bold;
+	clear:both;
+	cursor:pointer;
+}
+.actions .graph {
+	padding-left:20px;
+	background:url('../img/graph.icon.png') no-repeat left;
+}
+.actions .table {
+	padding-left:20px;
+	background:url('../img/table.icon.png') no-repeat left;
+}
+.actions .table:hover {
+	padding-left:20px;
+	background:url('../img/table.hicon.png') no-repeat left;
+}
+.actions .list {
+	padding-left:20px;
+	background:url('../img/list.icon.png') no-repeat left;
+}
+.actions .list:hover {
+	padding-left:20px;
+	background:url('../img/list.hicon.png') no-repeat left;
+}
+.actions .meters {
+	padding-left:20px;
+	background:url('../img/meters.icon.png') no-repeat left;
+}
+.actions .export-csv {
+	padding-left:20px;
+	background:url('../img/csv.icon.png') no-repeat left;
+}
+.actions .status {
+	padding-left:20px;
+	background:url('../img/status.icon.png') no-repeat left;
+}
+.actions .acos {
+	padding-left:20px;
+	background:url('../img/acos.icon.png') no-repeat left;
+}
+.actions .aros {
+	padding-left:20px;
+	background:url('../img/aros.icon.png') no-repeat left;
+}
+.actions .permissions {
+	padding-left:20px;
+	background:url('../img/permissions.icon.png') no-repeat left;
+}
+.actions .grant {
+	padding-left:20px;
+	background:url('../img/grant.icon.png') no-repeat left;
+}
+.actions .revoke {
+	padding-left:20px;
+	background:url('../img/revoke.icon.png') no-repeat left;
+}
+.actions .access {
+	padding-left:20px;
+	background:url('../img/access.icon.png') no-repeat left;
+}
+.actions .access:hover {
+	padding-left:20px;
+	background:url('../img/access.hicon.png') no-repeat left;
+}
+.actions .points {
+	padding-left:20px;
+	background:url('../img/points.icon.png') no-repeat left;
+}
+.actions .import {
+	padding-left:20px;
+	background:url('../img/package.add.icon.png') no-repeat left;
+}
+.actions .import:hover {
+	padding-left:20px;
+	background:url('../img/package.add.hicon.png') no-repeat left;
+}
+.actions .diff {
+	padding-left:20px;
+	background:url('../img/notequal.icon.png') no-repeat left;
+}
+.actions .diff:hover {
+	padding-left:20px;
+	background:url('../img/notequal.hicon.png') no-repeat left;
+}
+.actions .channels {
+	padding-left:20px;
+	background:url('../img/channels.icon.png') no-repeat left;
+}
+.actions .channels:hover {
+	padding-left:20px;
+	background:url('../img/channels.hicon.png') no-repeat left;
+}
+.actions .failures {
+	padding-left:20px;
+	background:url('../img/calendar.icon.png') no-repeat left;
+}
+.actions .failures:hover {
+	padding-left:20px;
+	background:url('../img/calendar.hicon.png') no-repeat left;
+}
+.actions .scde {
+	padding-left:20px;
+	background:url('../img/scde.icon.png') no-repeat left;
+}
+.actions .scde:hover {
+	padding-left:20px;
+	background:url('../img/scde.hicon.png') no-repeat left;
+}
+.actions .map {
+	padding-left:20px;
+	background:url('../img/world.icon.png') no-repeat left;
+}
+.actions .map:hover {
+	padding-left:20px;
+	background:url('../img/world.hicon.png') no-repeat left;
+}
+.actions .keycurve {
+	padding-left:20px;
+	background:url('../img/keycurve.icon.png') no-repeat left;
+}
+.actions .keycurve:hover {
+	padding-left:20px;
+	background:url('../img/keycurve.hicon.png') no-repeat left;
+}
+.actions .report {
+	padding-left:20px;
+	background:url('../img/report.icon.png') no-repeat left;
+}
+.actions .report:hover {
+	padding-left:20px;
+	background:url('../img/report.hicon.png') no-repeat left;
+}
+.block-closed {
+	padding-left:20px;
+	background:url('../img/arrow.right.png') no-repeat left;
+}
+.actions .calendar {
+	padding-left:20px;
+	background:url('../img/calendar.icon.png') no-repeat left;
+}
+.actions .calendar:hover {
+	padding-left:20px;
+	background:url('../img/calendar.hicon.png') no-repeat left;
+}
