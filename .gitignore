@@ -1,17 +1,3 @@
-# Excluir arquivos do vim
-.*.swp
-Session.vim
-
-# Excluir arquivo do MySQL Workbench
-*.bak
-*.mwb
-
-# Excluir arquivos de dump SQL
-*.dump.sql
-*.dump.sql.bz2
-*.sql.bz2
-
-# Excluir arquivos temporários do Cake
 tmp/logs/*.log
 tmp/cache/cake_*
 tmp/cache/menu_*
@@ -49,8 +35,5 @@ config/geocode.php
 config/maintenance.php
 config/debug.php
 
-# Diretório com arquivos de teste
-bkp/
-
-# NetBeans
-nbproject/private/
+# Ignorar diretórios de IDE's ou softwares de projetos:
+nbproject/

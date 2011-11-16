@@ -1,0 +1,1 @@
+ALTER TABLE `users_map` ADD `color` VARCHAR( 32 ) NOT NULL AFTER `option` 
