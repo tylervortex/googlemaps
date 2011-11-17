@@ -102,125 +102,108 @@ class SitesController extends AppController {
 		$this->redirect(array('action' => 'map'));
 	}
 
-	function map() {
-		$this->Site->unbindModel(array('hasAndBelongsToMany' => array('User')), false);
-		$this->Site->SiteMeter->unbindModel(array('belongsTo' => array('Manufacturer')), false);
+		function ajax_map() {
+		if (1 || $this->RequestHandler->isAjax()) {
+			$this->log(print_r($this->data, true), 'debug');
+			Configure::write('debug', 0);
+			$this->layout = 'ajax';
 		
-		App::import('Model', 'UserMap');
-		$UserMap = new UserMap;
-		
-		if (!empty($this->data['UserMap'])) {
-			$result = $UserMap->find('first', array(
-				'fields' => array('id', 'option', 'color'),
-				'conditions' => array(
-					'user_id' => $this->Session->read('Auth.User.id'),
-					'option' => $this->data['UserMap']['option'],
-					'color' => $this->data['UserMap']['color'],
-				),
+			$meterRoles = $this->MeterRole->find('list', array('order' => 'weight'));
+			$sitesLocations = $this->Site->find('all', array(
+				'order' => 'Site.short_name',
 			));
-			
-			if (!$result) {
-				$results = $UserMap->find('all', array(
-					'conditions' => array(
-						'user_id' => $this->Session->read('Auth.User.id')
-					)
-				));
-				if (!$results) {
-					$this->data['UserMap']['user_id'] = $this->Session->read('Auth.User.id');
-					$this->data['UserMap']['option'] = $this->data['UserMap']['option'];
-					$this->data['UserMap']['color'] = $this->data['UserMap']['color'];
-					$UserMap->save($this->data);
+
+			$count = count($sitesLocations);
+			for ($i = 0; $i < $count; $i++) {
+				$site = $sitesLocations[$i];
+				$index = -1;
+				if ($site['Site']['segment_name'] == 'generation') {
+					if ($site['Site']['generation_type_name'] == 'ute') {
+						$index = 2;
+					} else if ($site['Site']['generation_type_name'] == 'se') {
+						$index = 3;
+					} else if ($site['Site']['generation_type_name'] == 'sol') {
+						$index = 4;
+					} else {
+						$index = 0;
+					}
+				} else if ($site['Site']['segment_name'] == 'consumption') {
+					$index = 1;
 				} else {
-					foreach ($results as $key => $result) {
-						if ($result['UserMap']['option'] != $this->data['UserMap']['option'] || $result['UserMap']['color'] != $this->data['UserMap']['color']) {
-							$this->data['UserMap']['user_id'] = $this->Session->read('Auth.User.id');
-							$this->data['UserMap']['option'] = $this->data['UserMap']['option'];
-							$this->data['UserMap']['color'] = $this->data['UserMap']['color'];
-							if ($UserMap->delete($result['UserMap']['id'])) {
-								$UserMap->save($this->data);
+					/* Não é nem do segmento de geração, nem do segmento de consumo. 
+					 * Verificar se é um ponto com hidrologia apenas. */
+					if ($site['Site']['hydro'] && !$site['Site']['energy']) {
+						$index = 5;
+					}
+				}
+				/* XXX A seqüência de types tem que estar na mesma
+				 * ordem da view.
+				 * A função recebe apenas um inteiro como parâmetro e
+				 * este inteiro é o índice desse array. Então, para
+				 * selecionar pontos de hidrelétricas, por exemplo, a
+				 * view passa o argumento "0" pela chamada Ajax; para
+				 * selecionar pontos de consumidores, passa "1"; e
+				 * assim por diante. */
+				if ($index != $this->data['type']) {
+					continue;
+				}
+				$x[$i]['i'] = $index;
+				$x[$i]['lat'] = $site['Site']['latitude'];
+				$x[$i]['lng'] = $site['Site']['longitude'];
+				$padrao1 = array(
+					'before'=> '',
+					'after' => '',
+					'zero' => '0,0',
+					'places' => 1,
+					'thousands' => '.',
+					'decimals' => ',',
+					'negative' => '()',
+					'escape' => true
+				);
+				$padrao3 = array(
+					'before'=> '',
+					'after' => '',
+					'zero' => '0,000',
+					'places' => 3,
+					'thousands' => '.',
+					'decimals' => ',',
+					'negative' => '()',
+					'escape' => true
+				);
+				$x[$i]['t'] = ($site['Site']['segment_name'] == 'generation' ? $site['GenerationType']['title'] : '') . ' ' . $site['Site']['short_name'];
+				$x[$i]['s'] = 0; /* sem coleta */
+				foreach ($site['SiteMeter'] as $n => $meter) {
+					if ($meter['fetch'] == 1) {
+						$diff = time() - $meter['log_status_time_ts'];
+						$x[$i]['s'] = 1;
+						if ($meter['log_status_id'] != 1) {
+							if ($diff > 6 * 60 * 60) {
+								$x[$i]['s'] = 3;
+							} else if ($diff > 3 * 60 * 60) {
+								$x[$i]['s'] = 2;
 							}
 						}
 					}
+					$x[$i]['m'][$n]['d'] = $this->Formatacao->dataHora($site['SiteMeter'][$n]['log_status_time'], false);
+					$x[$i]['m'][$n]['r'] = $meterRoles[$site['SiteMeter'][$n]['meter_role_name']];
 				}
+				/* parâmentro: Tensão */
+				$x[$i]['pt'] = $this->Formatacao->format($site['Site']['voltage_level'], $padrao1) . ' kV';
+				/* parâmetro: Capacidade de geração */
+				$x[$i]['pg'] = $this->Formatacao->format($site['Site']['generation_capacity'], $padrao3) . ' MW';
+				/* parâmetro: Capacidade de consumo */
+				$x[$i]['pc'] = $this->Formatacao->format($site['Site']['consumption_capacity'], $padrao3) . ' MW';
 			}
+			
+			$this->set('json', json_encode($x));
 		}
-		
-		$results = $UserMap->find( 'all', array(
-		    'recursive' => 0, 'order' => 'UserMap.user_id',
-		    'fields' => array('UserMap.id', 'UserMap.option', 'UserMap.color'),
-		    'conditions' => array('user_id' => $this->Session->read('Auth.User.id'))
+	}
+	
+	function map() {
+		$this->Site->unbindModel(array('hasAndBelongsToMany' => array('User')), false);
+		$results = $this->Site->find('all', array(
+			'order' => 'Site.short_name',
 		));
-		$options = Set::combine($results, '{n}.UserMap.id', '{n}.UserMap.option');
-		$colors = Set::combine($results, '{n}.UserMap.id', '{n}.UserMap.color');
-		$this->set('options', $options);
-		$this->set('colors', $colors);
-		
-		$findOption = Array();
-		$siteCondit = array('SET time_zone' => '-3:00', 'Site.deleted' => null, 'order' => 'Site.short_name');
-		
-		if (!empty($results)) {
-			foreach ($results as $l => $item) {
-				switch($item['UserMap']['option']) {
-					case 'fct':
-						$findOption[] = array('Site.generation_type_name' => 0, 'Site.segment_name' => 'consumption');
-						break;
-					case 'pch':
-						$findOption[] = array('Site.generation_type_name' => array('pch', 'cgh', 'pct'));
-						break;
-					case 'ute':
-						$findOption[] = array('Site.generation_type_name' => array('ute'));
-						break;
-					case 'sol':
-						$findOption[] = array('Site.generation_type_name' => array('sol'));
-						break;
-					case 'se':
-						$findOption[] = array('Site.generation_type_name' => array('se'));
-						break;
-					case 'riv':
-						$findOption[] = array('Site.energy' => 0, 'Site.hydro' => 1);
-						break;
-					default:
-						'';
-				}
-				
-				$db =& ConnectionManager::getDataSource('default');
-				switch($item['UserMap']['color']) {
-					case 'blue':
-						$findOption[] = array('SiteMeter.fetch' => 1, 'DATE_SUB(NOW(), INTERVAL 1 HOUR) >' => 'SiteMeter.log_status_time');
-						//$findOption[][time() - 'UNIX_TIMESTAMP(SiteMeter.log_status_time)'] = $db->expression("UNIX_TIMESTAMP() - UNIX_TIMESTAMP(SiteMeter.log_status_time) < 3 * 60 * 60");
-						break;
-					case 'yellow':
-						//$findOption[] = array('DATE_SUB(NOW(), INTERVAL 3 HOUR) <' => 'SiteMeter.log_status_time', 'DATE_SUB(NOW(), INTERVAL 6 HOUR) >' => 'SiteMeter.log_status_time');
-						$findOption[][time() - 'UNIX_TIMESTAMP(SiteMeter.log_status_time)'] = $db->expression("UNIX_TIMESTAMP() - UNIX_TIMESTAMP(SiteMeter.log_status_time) < 3 * 60 * 60");
-						break;
-					case 'red':
-						$findOption[] = array('DATE_SUB(NOW(), INTERVAL 6 HOUR) >' => 'SiteMeter.log_status_time');
-						//$findOption[] = array('DATE_SUB(NOW(), INTERVAL 6 HOUR)');
-						//$findOption[] = array("SiteMeter.log_status_time >" => date('Y-m-d', strtotime("6 HOUR")));
-						//$findOption[][time() - 'UNIX_TIMESTAMP(SiteMeter.log_status_time)'] = $db->expression("UNIX_TIMESTAMP() - UNIX_TIMESTAMP(SiteMeter.log_status_time) > 6 * 60 * 60");
-						break;
-					case 'gray':
-						$findOption[] = array('SiteMeter.fetch' => 0);
-						break;
-					default:
-						'';
-				}
-			}
-			$siteCondit['joins'] = array(
-				array(
-					'table' => 'sites_meters',
-					'alias' => 'SiteMeter',
-					'type' => 'inner',
-					'conditions' => array(
-						'SiteMeter.site_id = Site.id'
-					)
-				)
-			);
-			$siteCondit['conditions'] = array($findOption);
-		}
-		$results = $this->Site->find('all', $siteCondit);
-		pr($siteCondit);
-		
 		$this->set('sitesLocations', $results);
 		$this->set('meterRoles', $this->MeterRole->find('list', array('order' => 'weight')));
 	}

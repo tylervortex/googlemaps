@@ -5,6 +5,7 @@
 var sites = [
 <?php
 $count = count($sitesLocations);
+$count = 0;
 for ($i = 0; $i < $count; $i++) {
 	$site = $sitesLocations[$i];
 	$img = -1;
@@ -84,6 +85,7 @@ for ($i = 0; $i < $count; $i++) {
 ];
 var markers = new Array();
 var map;
+var images;
 var infoWindow;
 function initialize() {
 	var mapOptions = {
@@ -91,7 +93,7 @@ function initialize() {
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
 	var img = [ 'dam', 'factory', 'powerplant', 'powersubstation', 'solarenergy', 'river' ];
-	var images = new Array(img.length);
+	images = new Array(img.length);
 	for (var i = 0; i < img.length; i++) {
 		images[i] = new Array(3);
 		images[i][0] = new google.maps.MarkerImage('<?php echo $this->webroot; ?>img/' + img[i] + '0.png');
@@ -128,6 +130,44 @@ function autoCenter() {
 }
 $(document).ready(function () {
 	initialize();
+	$(".legend_type").click(function() {
+		var a = $(this).attr('id').split('_');
+		$.ajax({
+			url: "<?php echo $this->Html->url(array('controller' => 'sites', 'action' => 'ajax_map')); ?>",
+			data: { "data[type]" : a[1] },
+			type: "POST",
+			success: function(data, statusText) {
+				console.log(data);
+				var o = $.parseJSON(data);
+				var bounds = new google.maps.LatLngBounds();
+				for (var i in o) {
+					site = o[i];
+					console.log(site);
+					var latlng = new google.maps.LatLng(site.lat, site.lng);
+					marker = new google.maps.Marker({
+						position: latlng,
+						map: map,
+						icon: images[site.i][site.s],
+						title: site.t,
+						html: site.t
+					});
+					bounds.extend(marker.position);
+					google.maps.event.addListener(marker, 'click', function() {
+						infoWindow.setContent(this.html);
+						infoWindow.open(map, this);
+					});
+				}
+				map.fitBounds(bounds);
+			},
+			error: function(x, statusText) {
+				if (x.status == 403) {
+					alert("Sua sessão expirou.\n\nPor favor, faça o login novamente.");
+					window.location.href = "/";
+				}
+			}
+		});
+
+	});
 });
 <?php $this->Html->scriptEnd(); ?>
 <div class="module-title">Pontos de medição</div>
@@ -136,28 +176,28 @@ $(document).ready(function () {
 		<?php echo $this->element('sites_actions'); ?>
 	</div>
 	<?php echo $this->Session->flash('auth'); ?>
+	<?php if (!$sitesLocations) { ?>
+	Nenhum ponto cadastrado.
+	<?php } else { ?>
 	<fieldset style="clear:both">
 		<legend>Mapa de Pontos de Medição</legend>
-		<div <?php echo ($sitesLocations) ? 'id="map_canvas"' : ''; ?> style="float:left;margin-right:30px;width:700px;height:600px"><?php echo ($sitesLocations) ? '' : 'Nenhum ponto cadastrado.'; ?></div>
-		<div style="float:left; font-size:10pt">
-			<?php echo $this->Form->create('Site', array('encoding' => null)); ?>
+		<div id="map_canvas" style="float:left;margin-right:30px;width:700px;height:600px"></div>
+		<div style="font-size:10pt">
 			<p style="font-weight:bold">Legenda</p>
-			<input name="data[UserMap][option]" id="UserMapOptionFct" value="fct" <?php echo (in_array('fct', $options) ? 'checked' : ''); ?> type="radio"> <?php echo $this->Html->image('factory1.png', array('style' => 'vertical-align:middle')); ?> Consumidor<br />
-			<input name="data[UserMap][option]" id="UserMapOptionPch" value="pch" <?php echo (in_array('pch', $options) ? 'checked' : ''); ?> type="radio"> <?php echo $this->Html->image('dam1.png', array('style' => 'vertical-align:middle')); ?> Gerador hidrelétrico<br />
-			<input name="data[UserMap][option]" id="UserMapOptionUte" value="ute" <?php echo (in_array('ute', $options) ? 'checked' : ''); ?> type="radio"> <?php echo $this->Html->image('powerplant1.png', array('style' => 'vertical-align:middle')); ?> Gerador térmico<br />
-			<input name="data[UserMap][option]" id="UserMapOptionSol" value="sol" <?php echo (in_array('sol', $options) ? 'checked' : ''); ?> type="radio"> <?php echo $this->Html->image('solarenergy1.png', array('style' => 'vertical-align:middle')); ?> Gerador solar<br />
-			<input name="data[UserMap][option]" id="UserMapOptionSe" value="se" <?php echo (in_array('se', $options) ? 'checked' : ''); ?> type="radio"> <?php echo $this->Html->image('powersubstation1.png', array('style' => 'vertical-align:middle')); ?> Subestação<br />
-			<input name="data[UserMap][option]" id="UserMapOptionRiv" value="riv" <?php echo (in_array('riv', $options) ? 'checked' : ''); ?> type="radio"> <?php echo $this->Html->image('river1.png', array('style' => 'vertical-align:middle')); ?> Estação Hidrológica<br />
-			<input name="data[UserMap][option]" id="UserMapOptionAll" value="all" <?php echo (empty($options) || in_array('all', $options) ? 'checked' : ''); ?> type="radio"> Todos</label><br />
+			<?php echo $this->Html->image('factory1.png', array('style' => 'vertical-align:middle', 'class' => 'legend_type', 'id' => 'type_1')); ?> Consumidor<br />
+			<?php echo $this->Html->image('dam1.png', array('style' => 'vertical-align:middle', 'class' => 'legend_type', 'id' => 'type_0')); ?> Gerador hidrelétrico<br />
+			<?php echo $this->Html->image('powerplant1.png', array('style' => 'vertical-align:middle', 'class' => 'legend_type', 'id' => 'type_2')); ?> Gerador térmico<br />
+			<?php echo $this->Html->image('solarenergy1.png', array('style' => 'vertical-align:middle', 'class' => 'legend_type', 'id' => 'type_4')); ?> Gerador solar<br />
+			<?php echo $this->Html->image('powersubstation1.png', array('style' => 'vertical-align:middle', 'class' => 'legend_type', 'id' => 'type_3')); ?> Subestação<br />
+			<?php echo $this->Html->image('river1.png', array('style' => 'vertical-align:middle', 'class' => 'legend_type', 'id' => 'type_5')); ?> Estação hidrológica<br />
 			<p style="font-weight:bold">Cores</p>
 			<table cellspacing="6" cellpadding="0">
-			<tr><td style="width:70px"><input name="data[UserMap][color]" id="UserMapColorBlue" value="blue" <?php echo (in_array('blue', $colors) ? 'checked' : ''); ?> type="radio"> <span style="color:blue;font-weight:bold">azul</span></td><td>Coleta atualizada</td></tr>
-			<tr><td style="width:70px"><input name="data[UserMap][color]" id="UserMapColorYellow" value="yellow" <?php echo (in_array('yellow', $colors) ? 'checked' : ''); ?> type="radio"> <span style="color:yellow;font-weight:bold">amarelo</span></td><td>Coleta atrasada há mais de 3 horas</td></tr>
-			<tr><td style="width:100px"><input name="data[UserMap][color]" id="UserMapColorRed" value="red" <?php echo (in_array('red', $colors) ? 'checked' : ''); ?> type="radio"> <span style="color:red;font-weight:bold">vermelho</span></td><td>Coleta atrasada há mais de 6 horas</td></tr>
-			<tr><td style="width:70px"><input name="data[UserMap][color]" id="UserMapColorGray" value="gray" <?php echo (in_array('gray', $colors) ? 'checked' : ''); ?> type="radio"> <span style="color:gray;font-weight:bold">cinza</span></td><td>Ponto sem coleta</td></tr>
-			<tr><td style="width:70px"><input name="data[UserMap][color]" id="UserMapColorAll" value="all" <?php echo (empty($colors) || in_array('all', $colors) ? 'checked' : ''); ?> type="radio"></td><td>Todos</td></tr>
+			<tr><td style="width:70px"><span style="color:blue;font-weight:bold">azul</span></td><td>Coleta atualizada</td></tr>
+			<tr><td style="width:70px"><span style="color:yellow;font-weight:bold">amarelo</span></td><td>Coleta atrasada há mais de 3 horas</td></tr>
+			<tr><td style="width:70px"><span style="color:red;font-weight:bold">vermelho</span></td><td>Coleta atrasada há mais de 6 horas</td></tr>
+			<tr><td style="width:70px"><span style="color:gray;font-weight:bold">cinza</span></td><td>Ponto sem coleta</td></tr>
 			</table>
-			<?php echo $this->Form->end(array('label' => 'OK', 'div' => false)); ?>
 		</div>
 	</fieldset>
+	<?php } ?>
 </div>
